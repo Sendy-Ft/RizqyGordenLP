@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Katalog Gorden</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            background: #f8f8f8;
+        }
+        h1 {
+            margin: 20px 0;
+        }
+        .container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            padding: 20px;
+            justify-content: center;
+        }
+        .product {
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 15px;
+            background: #fff;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .swiper-container {
+            width: 100%;
+            height: 300px;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .swiper-slide {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .swiper-slide img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        .product h2 {
+            font-size: 18px;
+            margin: 10px 0;
+        }
+        .product p {
+            font-size: 14px;
+            color: #555;
+        }
+        .product .price {
+            font-weight: bold;
+            font-size: 16px;
+            color: #000;
+            margin: 5px 0;
+        }
+        .button {
+            display: block;
+            background: green;
+            color: white;
+            text-decoration: none;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+        .swiper-pagination {
+            position: absolute;
+            bottom: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            z-index: 10;
+        }
+        .swiper-pagination-bullet {
+            width: 8px;
+            height: 8px;
+            background: gray;
+            opacity: 0.6;
+        }
+        .swiper-pagination-bullet-active {
+            background: blue;
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <h1>Katalog Gorden</h1>
+    <div class="container">
+        {% for product in products %}
+        <div class="product">
+            <div class="swiper-container swiper-{{ loop.index }}">
+                <div class="swiper-wrapper">
+                    {% for img in product.images %}
+                    <div class="swiper-slide">
+                        <img src="{{ url_for('static', filename='images/' + img) }}" alt="{{ product.name }}">
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="swiper-pagination swiper-pagination-{{ loop.index }}"></div>
+                <div class="swiper-button-next swiper-button-next-{{ loop.index }}"></div>
+                <div class="swiper-button-prev swiper-button-prev-{{ loop.index }}"></div>
+            </div>
+            <h2>{{ product.name }}</h2>
+            <p>{{ product.description }}</p>
+            <p class="price">{{ product.price }}</p>
+            <a class="button" href="https://wa.me/{{ product.whatsapp }}?text=Halo,%20saya%20tertarik%20dengan%20{{ product.name }}">Pesan via WhatsApp</a>
+        </div>
+        {% endfor %}
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            {% for product in products %}
+            new Swiper('.swiper-{{ loop.index }}', {
+                loop: true,
+                navigation: { 
+                    nextEl: '.swiper-button-next-{{ loop.index }}', 
+                    prevEl: '.swiper-button-prev-{{ loop.index }}' 
+                },
+                pagination: { 
+                    el: '.swiper-pagination-{{ loop.index }}', 
+                    clickable: true, 
+                    dynamicBullets: true 
+                },
+                slidesPerView: 1,
+                spaceBetween: 0,
+            });
+            {% endfor %}
+        });
+    </script>
+
+</body>
+</html>
