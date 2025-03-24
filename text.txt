@@ -1,0 +1,14 @@
+[
+    {
+        "name": "Gorden Minimalis",
+        "price": "Rp 150.000",
+        "description": "Gorden berkualitas dengan desain minimalis.",
+        "whatsapp": "628123456789"
+    },
+    {
+        "name": "Gorden Mewah",
+        "price": "Rp 250.000",
+        "description": "Gorden mewah dengan bahan premium.",
+        "whatsapp": "628987654321"
+    }
+]
